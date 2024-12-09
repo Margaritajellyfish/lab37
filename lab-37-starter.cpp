@@ -2,33 +2,47 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
-
+#include <map>
+#include <list>
 using namespace std;
 
-int sum_ascii(const string& input);
+
+int gen_hash_index(const string& input) {
+    int hash_index = 0;
+    for (char c : input) {
+        hash_index += (int)c; 
+    }
+    return hash_index % 97; 
+}
 int main() {
     ifstream fin;
     fin.open("lab-37-data.txt");
-    long long sum = 0;
     string line;
-    if(!fin.eof()){cout << "fail to open file.";}
+    
+    map<int, list<string>> hash_table;
+    if(!fin.is_open()){cout << "fail to open file.";}
+
     while(getline(fin, line)){
-        sum += sum_ascii(line);
+        int hash = gen_hash_index(line);
+        hash_table[hash].push_back(line); 
     }
     fin.close();
     
-    cout << "The grand total of ASCII values is: " << sum;
+    int count = 0;
+    do{for (const auto& [hash, strings] : hash_table) {
+
+        cout << "Hash Index: " << hash << " -> ";
+        for (const string& str : strings) {
+            cout << str << " ";
+            count++;
+        }
+        cout << endl;
+        
+    }}while (count <100);
 
     return 0;
 }
-int sum_ascii(const string& input){
-    int sum = 0;
-    for (char c : input) {
-        sum += (int)c;
-    }
-    return sum;
 
-}
 
 /* 
 These targets are present in the dataset and can be used for testing:
