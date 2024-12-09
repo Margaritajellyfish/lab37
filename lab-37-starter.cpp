@@ -44,6 +44,39 @@ void sch_key(map<int, list<string>>& hash_table) {
             return;
         }
     }
+    cout << "Code not found." << endl;
+}
+void add_key(map<int, list<string>>& hash_table) {
+    cout << "Enter new code to add: ";
+    string code;
+    cin >> code;
+    int hash = gen_hash_index(code);
+    hash_table[hash].push_back(code);
+    cout << code << " added at hash index " << hash << "." << endl;
+}
+void remove_key(map<int, list<string>>& hash_table) {
+    cout << "code to remove: ";
+    string code;
+    cin >> code;
+    int hash = gen_hash_index(code);
+
+    auto it = hash_table.find(hash);
+    if (it == hash_table.end()) {
+        cout << "Code not found." << endl;
+        return;
+    }
+    for (auto list_it = it->second.begin(); list_it != it->second.end(); ++list_it) {
+        if (*list_it == code) {
+            it->second.erase(list_it);
+            cout  << code << " removed." << endl;
+    
+            if (it->second.empty()) {
+                hash_table.erase(it);
+            }
+            return;
+        }
+    }
+    cout << "Code not found." << endl;
 }
 
 int main() {
