@@ -12,7 +12,7 @@ int gen_hash_index(const string& input) {
     for (char c : input) {
         hash_index += (int)c; 
     }
-    return hash_index % 97; 
+    return hash_index % 997; 
 }
 int main() {
     ifstream fin;
@@ -29,7 +29,7 @@ int main() {
     fin.close();
     
     int count = 0;
-   for (int hash = 0; hash < 97 && count < 100; ++hash) {
+   for (int hash = 0; hash < 997 && count < 100; ++hash) {
         if (hash_table.find(hash) != hash_table.end()) { 
             cout << "Hash Index: " << hash << " -> ";
             for (const string& str : hash_table[hash]) {
