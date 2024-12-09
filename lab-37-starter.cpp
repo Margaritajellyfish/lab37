@@ -27,22 +27,46 @@ int main() {
         hash_table[hash].push_back(line); 
     }
     fin.close();
-    
-    int count = 0;
-   for (int hash = 0; hash < 997 && count < 100; ++hash) {
-        if (hash_table.find(hash) != hash_table.end()) { 
-            cout << "Hash Index: " << hash << " -> ";
-            for (const string& str : hash_table[hash]) {
-                cout << str << " ";
-                count++;
-                if (count >= 100) break; 
-            }
-            cout << endl;
+    int choice;
+
+    do{
+        cout<< "1. print first 100 entries\n"
+            << "2. search for a key\n"
+            << "3. add a key\n"
+            << "4. remove a key\n"
+            << "5. modify a key\n"
+            << "6. exit\n"
+            << "choice: ";
+        cin >> choice;
+        switch (choice){
+             case 1:
+                print_100(hash_table);
+                break;
+            case 2:
+                sch_key(hash_table);
+                break;
+            case 3:
+                add_key(hash_table);
+                break;
+            case 4:
+                remov_key(hash_table);
+                break;
+            case 5:
+                mod_key(hash_table);
+                break;
+            case 6:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
         }
+        }while (choice != 6);
+
+        return 0;
     }
 
-    return 0;
-}
+
+    
 
 
 /* 
