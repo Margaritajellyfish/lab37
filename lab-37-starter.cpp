@@ -29,16 +29,17 @@ int main() {
     fin.close();
     
     int count = 0;
-    do{for (const auto& [hash, strings] : hash_table) {
-
-        cout << "Hash Index: " << hash << " -> ";
-        for (const string& str : strings) {
-            cout << str << " ";
-            count++;
+   for (int hash = 0; hash < 97 && count < 100; ++hash) {
+        if (hash_table.find(hash) != hash_table.end()) { 
+            cout << "Hash Index: " << hash << " -> ";
+            for (const string& str : hash_table[hash]) {
+                cout << str << " ";
+                count++;
+                if (count >= 100) break; 
+            }
+            cout << endl;
         }
-        cout << endl;
-        
-    }}while (count <100);
+    }
 
     return 0;
 }
