@@ -5,7 +5,7 @@
 #include <map>
 #include <list>
 using namespace std;
-void print_100_(map<int, list<string>>& hash_table) {
+void print_100(map<int, list<string>>& hash_table) {
 int count = 0;
     for (int hash = 0; hash < 997 && count < 100; ++hash) {
         if (hash_table.find(hash) != hash_table.end()) { 
@@ -54,7 +54,7 @@ void add_key(map<int, list<string>>& hash_table) {
     hash_table[hash].push_back(code);
     cout << code << " added at hash index " << hash << "." << endl;
 }
-void remove_key(map<int, list<string>>& hash_table) {
+void remov_key(map<int, list<string>>& hash_table) {
     cout << "code to remove: ";
     string code;
     cin >> code;
@@ -77,6 +77,42 @@ void remove_key(map<int, list<string>>& hash_table) {
         }
     }
     cout << "Code not found." << endl;
+}
+
+void mod_key(map<int, list<string>>& hash_table) {
+    cout << "Enter the code: ";
+    string code;
+    cin >> code;
+    int hash = gen_hash_index(code);
+    auto it = hash_table.find(hash);
+    if (it == hash_table.end()) {
+        cout << "Original code not found." << endl;
+        return;
+    }
+    bool found = false;
+    for (auto list_it = it->second.begin(); list_it != it->second.end(); ++list_it) {
+        if (*list_it == code) {
+            it->second.erase(list_it);
+            found = true;
+    
+            if (it->second.empty()) {
+                hash_table.erase(it);
+            }
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Original code not found." << endl;
+        return;
+    }
+    cout << "Enter new code: ";
+    string new_code;
+    cin >> new_code;
+    int new_hash = gen_hash_index(new_code);
+
+    hash_table[new_hash].push_back(new_code);
+    cout << code << " changed to " << new_code << "." << endl;
 }
 
 int main() {
