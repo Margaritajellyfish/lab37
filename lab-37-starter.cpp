@@ -5,7 +5,20 @@
 #include <map>
 #include <list>
 using namespace std;
-
+void print_100_(map<int, list<string>>& hash_table) {
+int count = 0;
+    for (int hash = 0; hash < 997 && count < 100; ++hash) {
+        if (hash_table.find(hash) != hash_table.end()) { 
+            cout << "Hash Index: " << hash << " -> ";
+            for (const string& str : hash_table[hash]) {
+                cout << str << " ";
+                count++;
+                if (count >= 100) break; 
+            }
+            cout << endl;
+        }
+    }
+}   
 
 int gen_hash_index(const string& input) {
     int hash_index = 0;
@@ -14,6 +27,25 @@ int gen_hash_index(const string& input) {
     }
     return hash_index % 997; 
 }
+void sch_key(map<int, list<string>>& hash_table) {
+    cout << "search code: ";
+    string code;
+    cin >> code;
+    int hash = gen_hash_index(code);
+
+    auto it = hash_table.find(hash);
+    if (it == hash_table.end()) {
+        cout << "Code not found." << endl;
+        return;
+    }
+    for (auto& val : it->second) {
+        if (val == code) {
+            cout << code << " found in hash index " << hash << "." << endl;
+            return;
+        }
+    }
+}
+
 int main() {
     ifstream fin;
     fin.open("lab-37-data.txt");
@@ -67,12 +99,3 @@ int main() {
 
 
     
-
-
-/* 
-These targets are present in the dataset and can be used for testing:
-536B9DFC93AF
-1DA9D64D02A0
-666D109AA22E
-E1D2665B21EA
-*/
